@@ -10,9 +10,8 @@ import * as d3 from 'd3';
 export class BarchartComponent implements OnInit, OnChanges {
 
   @ViewChild('chart')
-  private chartContainer: ElementRef
+  private chartContainer: ElementRef;
 
-  @Input()
   private data: Array<any>;
 
   private margin = { top: 20, bottom: 20, left: 20, right: 20 }
@@ -28,6 +27,8 @@ export class BarchartComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+    this.generateData();
+    
     this.createChart();
     if (this.data) {
       this.updateChart();
@@ -76,6 +77,16 @@ export class BarchartComponent implements OnInit, OnChanges {
       .attr('class', 'axis axis-y')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
       .call(d3.axisLeft(this.yScale));
+  }
+
+  generateData() {
+    this.data = [];
+    for (let i = 0; i < (8 + Math.floor(Math.random() * 10)); i++) {
+      this.data.push([
+        `Index ${i}`,
+        Math.floor(Math.random() * 100)
+      ]);
+    }
   }
 
   updateChart() {
